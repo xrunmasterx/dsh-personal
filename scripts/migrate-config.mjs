@@ -1,5 +1,5 @@
 /** Preserve the legacy host configuration while relocating its owned writable files. */
-import { readFile, writeFile } from 'node:fs/promises'
+import { readFile, writeFile, readdir } from 'node:fs/promises'
 import { join, isAbsolute } from 'node:path'
 import { parseDocument, YAMLSeq, isScalar, visit } from 'yaml'
 
@@ -24,6 +24,18 @@ export async function migrateProfileConfig(home) {
   if (!config) throw new Error('Legacy Personal host configuration is missing')
   // Screenshots and investigation artifacts are copied under this home by migrate.mjs.
   config.set('dataRoot', join(home, 'personal-workbench'))
+  if (!config.has('profileIdentity')) {
+    const directory = join(home, 'storages/personal_workbench/evidence')
+    let entries = []
+    try { entries = await readdir(directory) }
+    catch (error) { if (error.code !== 'ENOENT') throw error }
+    let latest
+    for (const entry of entries.filter(name => name.endsWith('.json'))) {
+      const snapshot = JSON.parse(await readFile(join(directory, entry), 'utf8')).record
+      if (snapshot?.identity && (!latest || snapshot.createdAt > latest.createdAt)) latest = snapshot
+    }
+    if (latest) config.set('profileIdentity', latest.identity)
+  }
   visit(config, (_, node) => {
     if (isScalar(node) && typeof node.value === 'string' && isAbsolute(node.value)) {
       const previous = manifest.source
