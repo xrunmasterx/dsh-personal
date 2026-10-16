@@ -25,7 +25,10 @@ function run(args, quiet = false) {
   if (result.error) throw result.error
   if (result.status !== 0) throw new Error(`DSH installation failed (${result.status}): ${quiet ? result.stderr : ''}`)
 }
-run(['--profile', 'personal', '--from-default-profile', 'web', '--dump-config'], true)
+let existing = false
+try { await access(join(home, 'profiles/personal/package.json')); existing = true }
+catch (error) { if (error.code !== 'ENOENT') throw error }
+run(['--profile', 'personal', ...(existing ? [] : ['--from-default-profile', 'web']), '--dump-config'], true)
 run(['plugin', '--profile', 'personal', 'add', `link:${join(root, 'packages/personal')}`])
 await migrateProfileConfig(home)
 await writeFile(join(home, 'personal-installation.json'), JSON.stringify({ repository: 'https://github.com/xrunmasterx/dsh-personal',
