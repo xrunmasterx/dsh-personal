@@ -1,0 +1,18 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`emphasizes questions and answers while collapsing progress and revealing cited progress 1`] = `
+[
+  "你的提问",
+  "查看过程消息 · 1 条",
+  "助手回答",
+]
+`;
+
+exports[`opens task histories in the work-area host and restores the retained card on Escape 1`] = `"IBL discussion"`;
+
+exports[`removes only a leading request wrapper from questions without changing stored text 1`] = `
+"你你的提问2026/9/9 15:00:00重启可视化面板
+保留 全部问答"
+`;
+
+exports[`shows initial coverage without presenting an unfinished summary and still opens the questions 1`] = `"首次分析中 · 已处理 1/3 条"`;

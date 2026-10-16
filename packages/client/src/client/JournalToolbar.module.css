@@ -1,0 +1,56 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 14px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--pw-line);
+}
+.toolbar h1 {
+  margin: 0;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+}
+.weekControl, .toolbarActions { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.toolbarActions { margin-left:auto; gap:8px; }
+.toolbar button {
+  min-height:30px;
+  padding:5px 9px;
+  border-color:transparent;
+  border-radius:var(--pw-radius-control);
+  background:transparent;
+  font-size:12px;
+}
+.toolbar button:hover, .toolbar button[aria-pressed='true'] { background:var(--pw-paper-muted); }
+.toolbar .datePicker, .toolbar .helpMenu { position:relative; margin:0; }
+.toolbar summary {
+  list-style:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:6px 8px;
+  border-radius:var(--pw-radius-control);
+  font-size:12px;
+  cursor:pointer;
+  color:var(--pw-ink-soft);
+}
+.toolbar summary::-webkit-details-marker { display:none; }
+.toolbar summary:hover { background:var(--pw-paper-muted); }
+.datePopover, .helpPopover {
+  position:absolute;
+  top:calc(100% + 8px);
+  z-index:6;
+  padding:12px;
+  border:1px solid var(--pw-line);
+  border-radius:var(--pw-radius-control);
+  background:var(--pw-paper-raised);
+  box-shadow:var(--pw-shadow-small);
+}
+.datePopover input { width:148px; font-size:12px; }
+.helpPopover { right:0; width:min(280px,70vw); }
+.helpPopover p { margin:0 0 12px; font-size:12px; color:var(--pw-ink-soft); }

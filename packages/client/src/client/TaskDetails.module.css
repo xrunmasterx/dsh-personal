@@ -1,0 +1,304 @@
+.taskPage {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  color: var(--pw-ink);
+}
+.header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 4px 0 18px;
+  border-bottom: 1px solid var(--pw-line);
+}
+.header > div {
+  flex: 1;
+  min-width: 0;
+}
+.taskPage .header h1 {
+  font:
+    600 24px/1.45 ui-sans-serif,
+    sans-serif;
+  margin: 6px 0 0;
+  overflow-wrap: anywhere;
+}
+.eyebrow,
+.status {
+  font-size: 12px;
+  color: var(--pw-muted);
+}
+.taskPage .back {
+  border: 0;
+  background: transparent;
+  font-size: 30px;
+  padding: 4px 12px;
+  border-radius: var(--pw-radius-control);
+}
+.brief,
+.sessions {
+  flex: none;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--pw-paper-raised);
+  border: 1px solid var(--pw-line);
+  border-radius: var(--pw-radius-panel);
+  padding: 22px 24px;
+}
+.sectionHead {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.taskPage .sectionHead h2 {
+  font:
+    600 16px/1.5 ui-sans-serif,
+    sans-serif;
+  margin: 0;
+}
+.sectionHead small {
+  margin-left: 8px;
+  font-weight: 400;
+  color: var(--pw-muted);
+}
+.taskPage .sectionHead button {
+  background: transparent;
+  border: 0;
+  color: var(--pw-accent);
+  padding: 6px 10px;
+}
+.taskPage .add {
+  font-size: 24px;
+}
+.taskPage .document {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.8;
+  min-height: 0;
+  overflow-wrap: anywhere;
+}
+.taskPage .document h2 {
+  font:
+    600 14px/1.5 ui-sans-serif,
+    sans-serif;
+  margin: 24px 0 8px;
+}
+.taskPage .document h2:first-child {
+  margin-top: 0;
+}
+.taskPage .editor {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+.taskPage .editor textarea {
+  flex: 1;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 280px;
+  resize: vertical;
+  font:
+    14px/1.8 ui-sans-serif,
+    sans-serif;
+}
+.editActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+.taskPage .sources {
+  flex-shrink: 0;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--pw-line);
+  font-size: 12px;
+}
+.sources a {
+  color: var(--pw-accent);
+  text-decoration: none;
+}
+.empty {
+  font-size: 13px;
+  color: var(--pw-muted);
+  padding: 28px 0;
+}
+.sessionList {
+  display: grid;
+  gap: 16px;
+}
+.taskPage .session {
+  width: 100%;
+  display: flex;
+  text-align: left;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border-radius: var(--pw-radius-card);
+  background: var(--pw-paper);
+}
+.taskPage .sessionRow[data-current='true'] {
+  border-color: var(--pw-line-strong);
+}
+.sessionCopy {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.conflict {
+  font-size: 13px;
+  color: var(--pw-amber);
+}
+@media (max-width: 900px) {
+  .brief,
+  .sessions {
+    padding: 20px;
+  }
+  .header h1 {
+    font-size: 20px;
+  }
+}
+
+.editActions small {
+  margin-right: auto;
+  color: var(--pw-muted);
+  font-size: 11px;
+}
+.editActions {
+  align-items: center;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+.taskPage .back,
+.taskPage .add {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.taskPage { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif; }
+.taskPage .header h1, .taskPage .sectionHead h2, .taskPage .document h2, .taskPage .editor textarea { font-family:inherit; }
+
+.sessionRow {
+  display: grid;
+}
+.taskPage .sessionRow .session {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+}
+.taskPage .archive {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--pw-radius-control);
+  background: transparent;
+  color: var(--pw-muted);
+}
+.taskPage .archive:hover:not(:disabled),
+.taskPage .archive:focus-visible {
+  color: var(--pw-accent);
+  background: var(--pw-accent-soft);
+}
+
+.taskPage .titleButton,
+.taskPage .titleInput {
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--pw-ink);
+}
+.taskPage .titleButton {
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+.taskPage .titleButton:hover { color: var(--pw-accent); }
+.taskPage .titleInput { margin-top: 6px; }
+
+.briefControls,
+.polishOption,
+.polishReceipt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.briefControls { flex-wrap: wrap; justify-content: flex-end; }
+.polishOption {
+  color: var(--pw-muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+.taskPage .polishOption input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--pw-accent);
+}
+.polishReceipt {
+  flex-shrink: 0;
+  margin-top: 10px;
+  color: var(--pw-muted);
+}
+.taskPage .polishReceipt button {
+  background: transparent;
+  border: 0;
+  color: var(--pw-accent);
+  font-size: 12px;
+}
+
+.sessionScroll { min-height: 0; display: flex; flex-direction: column; gap: 16px; }
+.sessionScroll > * { flex-shrink: 0; }
+.sessionFilters { flex-shrink: 0; margin-bottom: 16px; }
+.sessionList[hidden] { display: none; }
+.taskPage .sessionRow .session { padding: 0; border-radius: 0; }
+.sessionCopy { gap: 10px; }
+.sessionCopy small { font-size: 12px; }
+.sessionScroll:focus-visible { outline: 2px solid var(--pw-accent); outline-offset: 2px; }
+
+.sessionFilters button[aria-pressed='true'] { background: var(--pw-hover); border-color: var(--pw-line-strong); font-weight: 600; }
+
+.brief { display:block; }
+.brief > summary { cursor:pointer; }
+.brief > summary::before { content:'›'; color:var(--pw-muted); }
+.brief[open] > summary::before { transform:rotate(90deg); }
+.brief > summary h2 { flex:1; }
+.brief:not([open]) > summary { margin-bottom:0; }
+
+.editorModes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.editorModes > div { display: flex; gap: 4px; }
+.editorModes small { color: var(--pw-muted); }
+.editorModes button[aria-pressed='true'] {
+  background: var(--pw-hover);
+  border-color: var(--pw-line-strong);
+}
+.taskPage .editor textarea {
+  min-height: 160px;
+  resize: none;
+  overflow: hidden;
+  flex: none;
+}

@@ -1,0 +1,8 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.gif binary
+
+# Patch context preserves upstream tab indentation.
+patches/*.patch -whitespace
+*.cmd text eol=crlf

@@ -1,0 +1,20 @@
+--- a/lib/client.js
++++ b/lib/client.js
+@@ -13885,7 +13885,7 @@
+ 			"settings.enter.description": "智能体运行时 Enter 键和发送按钮的行为；Cmd/Ctrl+Enter 使用另一行为",
+ 			"settings.enter.queue": "排队发送",
+ 			"settings.enter.steer": "插话发送",
+-			"hero.headline": "探索未至之境",
++			"hero.headline": "今天想推进什么？",
+ 			"hero.preview": "预览版",
+ 			"hero.chooseWorkspace": "选择工作区",
+ 			"session.hierarchy": "会话层级",
+@@ -14041,7 +14041,7 @@
+ 			"settings.enter.description": "What Enter and the Send button do while the agent is running; Cmd/Ctrl+Enter uses the other behavior",
+ 			"settings.enter.queue": "Queue",
+ 			"settings.enter.steer": "Steer",
+-			"hero.headline": "Into the Unknown",
++			"hero.headline": "What would you like to move forward today?",
+ 			"hero.preview": "Preview",
+ 			"hero.chooseWorkspace": "Choose workspace",
+ 			"session.hierarchy": "Session hierarchy",

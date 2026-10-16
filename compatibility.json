@@ -1,0 +1,9 @@
+{
+  "personalVersion": "0.1.0",
+  "dshVersion": "0.1.6-alpha.1",
+  "originalSourceCommit": "ceaf64210f77b9710a2c61fa24826f8d795d58d8",
+  "runtimePatches": [
+    "patches/conversation-welcome-0.1.6.patch",
+    "patches/storage-json-0.1.6.patch"
+  ]
+}

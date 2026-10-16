@@ -1,0 +1,72 @@
+# Opt in after base and web-app; deactivate their layout before adding this root owner.
+- id: ui-layout
+  name: '@deepseek-ai/dsh-client-ui-layout'
+  disabled: true
+
+- insert:
+    - id: personal-workbench-layout
+      name: '@xrunmasterx/dsh-personal-client'
+    - id: personal-workbench-host
+      name: '@xrunmasterx/dsh-personal-host'
+      config:
+        dataRoot: !!js dshHomePath('personal-workbench')
+        connectionId: personal
+        projectName: Personal
+        sourceRoot: !!js process.env.PERSONAL_SOURCE_ROOT || process.cwd()
+        tapdWorkspaceIds: []
+        crashApps: []
+        gitSources: []
+        tapdUrl: https://mcpgw.knot.woa.com/tapd/
+        tapdTokenEnv: TAPD_ACCESS_TOKEN
+        crashSightUrl: https://crashsight.qq.com/mcp
+        crashSightTokenEnv: CRASHSIGHT_MCP_TOKEN
+        modelProvider: openai
+        investigationModel: gpt-5.6-sol
+        profileModel: gpt-5.6-sol
+        briefPolish:
+          provider: deepseek-official
+          model: deepseek-flash
+          reasoningEffort: off
+          timeoutMs: 60000
+          maxOutputTokens: 12000
+          maxOutputBytes: 262144
+        reasoningEffort: xhigh
+        investigationNetworkAccess: false
+        runTimeoutMs: 7200000
+        toolTimeoutMs: 60000
+        planTtlMs: 300000
+        maxCases: 12
+        maxConcurrentRuns: 2
+        pageSize: 20
+        maxResultBytes: 16777216
+        processGraceMs: 2000
+        cacheTtlMs: 300000
+        queryWindowDays: 7
+        pollIntervalMs: 3000
+        idlePollIntervalMs: 30000
+        maxPreviewBytes: 65536
+        crashSightTimeZone: Asia/Shanghai
+        maxProfileEvidence: 500
+        storage:
+          maxBytes: 10737418240
+          maxRunBytes: 1073741824
+          minFreeBytes: 2147483648
+          temporaryRetentionHours: 24
+          imageRetentionDays: 7
+          snapshotRetentionDays: 30
+          draftRetentionDays: 90
+          runRetentionDays: 180
+          sweepIntervalMs: 3600000
+        evidenceLimits:
+          maxAttachments: 48
+          maxDownloadBytes: 104857600
+          maxExtractedBytes: 536870912
+          maxExtractedFileBytes: 134217728
+          maxArchiveEntries: 2000
+          maxCollectedTextFileBytes: 33554432
+          maxCollectedTextTotalBytes: 134217728
+          downloadTimeoutMs: 60000
+    - id: personal-workbench-api
+      name: '@xrunmasterx/dsh-personal-api'
+    - id: personal-workbench-tools
+      name: '@xrunmasterx/dsh-personal-host/tools'

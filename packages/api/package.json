@@ -1,0 +1,54 @@
+{
+  "name": "@xrunmasterx/dsh-personal-api",
+  "description": "Explicit browser Remote assembly for the personal workbench",
+  "version": "0.1.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xrunmasterx/dsh-personal.git",
+    "directory": "packages/api"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "dsh": {
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-api-remotes"
+      ]
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "4.0.2"
+  },
+  "devDependencies": {
+    "@deepseek-ai/dsh-client-connection": "0.1.6-alpha.1",
+    "@deepseek-ai/cordis": "4.0.2",
+    "@deepseek-ai/dsh-api-remotes": "0.1.6-alpha.1",
+    "@xrunmasterx/dsh-personal-host": "workspace:*"
+  }
+}

@@ -1,0 +1,10 @@
+[
+  "新建任务对话",
+  "全部",
+  "DSH",
+  "Codex",
+  "Cursor",
+  "Existing conversationDSH · <date>",
+  "继续对话",
+  "归档会话：Existing conversation",
+]

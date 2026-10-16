@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.base.json",
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/host"
+    },
+    {
+      "path": "./packages/api/tsconfig.host.json"
+    },
+    {
+      "path": "./packages/personal"
+    }
+  ]
+}

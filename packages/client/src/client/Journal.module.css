@@ -1,0 +1,351 @@
+.journal {
+  container-type: inline-size;
+}
+.journal button,
+.journal input,
+.journal select,
+.journal textarea {
+  font: inherit;
+  color: var(--pw-ink);
+  border: 1px solid var(--pw-line);
+  border-radius: var(--pw-radius-control);
+  background: var(--pw-paper-raised);
+  padding: 8px 12px;
+  font-size: 13px;
+}
+.journal button {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.journal button:hover {
+  background: var(--pw-paper-muted);
+  border-color: var(--pw-line-strong);
+}
+.journal button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.journal :focus-visible {
+  outline: 2px solid var(--pw-accent);
+  outline-offset: 3px;
+}
+.journal .primary {
+  color: var(--pw-paper);
+  background: var(--pw-ink);
+  border-color: transparent;
+}
+.journal .primary:hover {
+  background: var(--pw-ink-soft);
+}
+.journal label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--pw-ink-soft);
+}
+.journal input,
+.journal textarea {
+  min-width: 0;
+}
+.journal textarea {
+  min-height: 100px;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+}
+.journal h2 {
+  font-size: 19px;
+  font-weight: 550;
+  margin: 24px 0 16px;
+}
+.journal h4 {
+  margin: 15px 0 0;
+}
+.journal p {
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.journal small {
+  color: var(--pw-muted);
+  line-height: 1.6;
+}
+.dates,
+.actions,
+.filters,
+.links,
+.plans {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.dates {
+  margin-bottom: 20px;
+}
+.dates label {
+  flex-direction: row;
+  align-items: center;
+}
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+.week button {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  background: transparent;
+  padding: 10px 4px;
+  border-color: transparent;
+}
+.week strong {
+  font:
+    600 22px ui-sans-serif,
+    sans-serif;
+}
+.week span {
+  color: var(--pw-accent);
+  font-size: 11px;
+}
+.week button[aria-pressed='true'] {
+  background: var(--pw-accent-soft);
+  border-color: var(--pw-line-strong);
+}
+.agentInput {
+  display: flex;
+  gap: 10px;
+  padding: 16px 0;
+  margin-bottom: 8px;
+}
+.agentInput input {
+  flex: 1;
+  background: transparent;
+}
+.capture {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid var(--pw-line);
+  border-radius: var(--pw-radius-card);
+  background: var(--pw-paper);
+}
+.capture label input {
+  flex: 1;
+}
+.journal .check {
+  flex-direction: row;
+  align-items: center;
+}
+.filters {
+  margin-top: 20px;
+}
+.filters input {
+  flex: 1;
+}
+.body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 28px;
+}
+.columns section {
+  min-width: 0;
+}
+.item {
+  padding: 18px;
+  margin-bottom: 12px;
+  border: 1px solid var(--pw-line);
+  border-left: 3px solid var(--pw-accent);
+  border-radius: var(--pw-radius-card);
+  background: var(--pw-paper-raised);
+}
+.item[data-status='done'] {
+  border-left-color: var(--pw-green);
+}
+.item[data-status='blocked'] {
+  border-left-color: var(--pw-amber);
+}
+.line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.line strong {
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+}
+.status {
+  flex-shrink: 0;
+  font-size: 11px;
+  border-radius: 5px;
+  padding: 3px 7px;
+  background: var(--pw-blue-soft);
+  color: var(--pw-blue);
+}
+.status[data-status='done'] {
+  background: var(--pw-green-soft);
+  color: var(--pw-green);
+}
+.status[data-status='blocked'] {
+  background: var(--pw-amber-soft);
+  color: var(--pw-amber);
+}
+.next {
+  font-size: 13px;
+  color: var(--pw-ink-soft);
+}
+.links a {
+  font-size: 12px;
+  color: var(--pw-blue);
+  overflow-wrap: anywhere;
+}
+.plans {
+  margin: 10px 0;
+}
+.plans span {
+  font-size: 12px;
+  background: var(--pw-paper-muted);
+  border-radius: 5px;
+  padding: 4px 8px;
+}
+.item summary,
+.journal details summary {
+  cursor: pointer;
+  padding: 10px 0;
+  font-size: 13px;
+  color: var(--pw-ink-soft);
+}
+.item .actions {
+  margin-top: 10px;
+}
+.item .actions button {
+  font-size: 12px;
+  padding: 6px 9px;
+}
+.editor {
+  display: grid;
+  gap: 10px;
+  padding: 15px 0;
+}
+.fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.receipt {
+  padding: 14px 0 14px 16px;
+  border-left: 2px solid var(--pw-line-strong);
+  margin: 0 0 18px;
+  scroll-margin-top: 20px;
+}
+.receipt .line span {
+  font-size: 11px;
+  color: var(--pw-muted);
+  white-space: nowrap;
+}
+.receipt p {
+  font-size: 13px;
+  margin: 5px 0;
+}
+.receipt[data-reverted='true'] {
+  opacity: 0.55;
+}
+.empty {
+  font-size: 14px;
+  padding: 24px;
+  border: 1px solid var(--pw-line);
+  border-radius: var(--pw-radius-control);
+  color: var(--pw-muted);
+}
+.error,
+.warning {
+  background: var(--pw-amber-soft);
+  color: var(--pw-amber);
+  padding: 12px 16px;
+  border-radius: var(--pw-radius-control);
+}
+.notice {
+  color: var(--pw-green);
+  font-size: 13px;
+}
+.reflection {
+  background: var(--pw-paper-raised);
+  border: 1px solid var(--pw-line);
+  border-radius: var(--pw-radius-panel);
+  padding: 28px;
+}
+.reflection h2 {
+  margin-top: 0;
+}
+.reflection .line {
+  flex-wrap: wrap;
+}
+.reflection .editor textarea {
+  min-height: 300px;
+}
+.markdown {
+  margin: 24px 0;
+}
+.retention {
+  display: block;
+  padding-top: 28px;
+}
+@container (max-width: 720px) {
+  .columns {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .fields {
+    grid-template-columns: 1fr;
+  }
+  .agentInput {
+    flex-wrap: wrap;
+  }
+  .agentInput input {
+    flex-basis: 100%;
+  }
+  .week {
+    gap: 1px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .journal button {
+    transition: none;
+  }
+}
+
+.detailColumns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+  gap: 32px;
+}
+.timeline {
+  min-width: 0;
+  border-left: 1px solid var(--pw-line);
+  padding-left: 24px;
+}
+.timeline h3 {
+  margin: 15px 0 24px;
+  font-size: 16px;
+}
+@media (max-width: 760px) {
+  .detailColumns {
+    grid-template-columns: 1fr;
+  }
+  .timeline {
+    border-left: 0;
+    padding-left: 0;
+  }
+}
+
+.reflectionBody { max-width:880px; margin:24px auto 0; }

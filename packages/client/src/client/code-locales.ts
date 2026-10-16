@@ -1,0 +1,36 @@
+/** Code archive copy in the Personal locale namespace. */
+export const codeZh = {
+  'code.checkBranchPrefix': 'Car 批次分支前缀',
+  'code.records': '提交与流转记录',
+  'code.failed': '同步未完成，查看原因',
+  'code.stagePending': '合入阶段待核对',
+  'code.lookback': '首次回看天数',
+  'nav.code': '代码进展', 'code.title': '代码进展', 'code.settings': '代码进展同步',
+  'code.hint': '提交改动与合入记录，供事项整理和周报引用。',
+  'code.retry': '重试失败项', 'code.running': '正在同步', 'code.idle': '上次同步', 'code.never': '尚未同步',
+  'code.empty': '暂无代码进展。可在会话与设置中配置仓库和作者。',
+  'code.development': '开发中', 'code.validation': 'Car 流程中', 'code.main': '已合入主干',
+  'code.pending': '待分析', 'code.evidence': '提交与阶段记录', 'code.expired': '原始 diff 已过保留期，摘要与来源仍保留。',
+  'code.first': '返回首页', 'code.next': '下一页', 'code.enabled': '自动同步',
+  'code.repository': '工蜂仓库', 'code.author': '提交作者', 'code.branchPrefix': '分支前缀',
+  'code.validationBranch': '验证分支', 'code.mainBranch': '主干分支', 'code.retention': '原始 diff 保留月数',
+  'code.retentionHint': '默认每小时检查。原始 diff 保留 3 个月；未完成分析或未入主干的改动继续保留。摘要、来源与阶段长期保存。',
+}
+/** English equivalents of every code archive key. */
+export const codeEn: Record<keyof typeof codeZh, string> = {
+  'code.checkBranchPrefix': 'Car batch branch prefix',
+  'code.records': 'Commit history',
+  'code.failed': 'Synchronization incomplete — details',
+  'code.stagePending': 'Integration check pending',
+  'code.lookback': 'Initial lookback days',
+  'nav.code': 'Code progress', 'code.title': 'Code progress', 'code.settings': 'Code synchronization',
+  'code.hint': 'Code changes and integration evidence for tasks and retrospectives.',
+  'code.retry': 'Retry failures', 'code.running': 'Synchronizing', 'code.idle': 'Last scan', 'code.never': 'Not scanned',
+  'code.empty': 'No code evidence. Configure a repository and author in Sessions & Settings.',
+  'code.development': 'Development committed', 'code.validation': 'In validation', 'code.main': 'In mainline',
+  'code.pending': 'Analysis pending', 'code.evidence': 'Commit and stage history', 'code.expired': 'Patch retention expired; summary and source remain available.',
+  'code.first': 'First page', 'code.next': 'Next page', 'code.enabled': 'Automatic sync',
+  'code.repository': 'Gongfeng repository', 'code.author': 'Commit author', 'code.branchPrefix': 'Branch prefix',
+  'code.validationBranch': 'Validation branch', 'code.mainBranch': 'Mainline branch', 'code.retention': 'Patch retention in months',
+  'code.retentionHint': 'Checks hourly by default. Patches remain for 3 months, longer while analysis or integration is pending. Summaries, sources and stages remain available.',
+}

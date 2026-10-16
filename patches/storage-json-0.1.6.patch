@@ -1,0 +1,37 @@
+--- a/lib/index.js
++++ b/lib/index.js
+@@ -410,12 +410,18 @@
+ async function loadTableRecords(records, versions, dir) {
+ 	const files = await readdir(dir, { withFileTypes: true });
+ 	const hasDocuments = files.some((file) => file.name.endsWith(".json"));
+-	const loaded = await Promise.all(files.map(async (file) => {
+-		if (!file.name.endsWith(".json")) return;
+-		const key = file.name.slice(0, -5);
+-		if (!SAFE_KEY_RE.test(key)) return;
+-		const record = await readRecord(join(dir, file.name), versions);
+-		if (record !== void 0) return [key, record];
++	const loaded = new Array(files.length);
++	let next = 0;
++	await Promise.all(Array.from({ length: Math.min(16, files.length) }, async () => {
++		while (next < files.length) {
++			const index = next++;
++			const file = files[index];
++			if (!file.name.endsWith(".json")) continue;
++			const key = file.name.slice(0, -5);
++			if (!SAFE_KEY_RE.test(key)) continue;
++			const record = await readRecord(join(dir, file.name), versions);
++			if (record !== void 0) loaded[index] = [key, record];
++		}
+ 	}));
+ 	for (const record of loaded) if (record !== void 0) records.set(...record);
+ 	return hasDocuments;
+@@ -424,7 +430,8 @@
+ async function readRecord(path, versions) {
+ 	try {
+ 		return parseRecord(await readFile(path, "utf8"), versions);
+-	} catch {
++	} catch (error) {
++		if (error?.code === "EMFILE" || error?.code === "ENFILE") throw error;
+ 		return;
+ 	}
+ }

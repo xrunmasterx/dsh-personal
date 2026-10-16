@@ -1,0 +1,118 @@
+{
+  "name": "@xrunmasterx/dsh-personal-host",
+  "description": "Personal TAPD and CrashSight workbench with durable investigations and reviewed profiles",
+  "version": "0.1.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xrunmasterx/dsh-personal.git",
+    "directory": "packages/host"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    "./invariant": {
+      "types": "./lib/types/invariant.d.ts",
+      "default": "./lib/invariant.js"
+    },
+    "./worker": "./lib/codex-worker.js",
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client.d.ts",
+      "default": "./lib/types/client.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./tools": {
+      "types": "./lib/types/tools.d.ts",
+      "default": "./lib/tools.js"
+    }
+  },
+  "files": [
+    "lib/index.js",
+    "lib/invariant.js",
+    "lib/import-cli.js",
+    "lib/codex-worker.js",
+    "lib/tools.js",
+    "lib/collector-*.js",
+    "lib/journal-*.js",
+    "lib/store-*.js",
+    "lib/diagnostics-*.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@deepseek-ai/schemastery": "3.18.2",
+    "@deepseek-ai/dsh-brand": "0.1.6-alpha.1",
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@openai/codex-sdk": "^0.145.0",
+    "@openai/codex": "0.145.0",
+    "smol-toml": "^1.7.1",
+    "yauzl": "^2.10.0",
+    "zod": "^4.4.3"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-invariants": "0.1.6-alpha.1",
+    "@deepseek-ai/cordis": "4.0.2",
+    "@deepseek-ai/dsh-jobs": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-subprocess": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-storage-domain": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-typert-protocol": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-credentials": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-storage": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-storage-json": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-tools": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-commands": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-user-questions": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-llm": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-session": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-settings": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-agent": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-system-prompt": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-attachment": "0.1.6-alpha.1"
+  },
+  "devDependencies": {
+    "@deepseek-ai/dsh-invariants": "0.1.6-alpha.1",
+    "@deepseek-ai/cordis": "4.0.2",
+    "@deepseek-ai/dsh-jobs": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-subprocess": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-storage-domain": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-typert-protocol": "0.1.6-alpha.1",
+    "@types/yauzl": "^2.10.3",
+    "@deepseek-ai/dsh-credentials": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-storage": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-storage-json": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-jobs-local": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-subprocess-local": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-tools": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-commands": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-user-questions": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-llm": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-session": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-settings": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-agent": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-system-prompt": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-attachment": "0.1.6-alpha.1",
+    "@deepseek-ai/dsh-attachment-local": "0.1.6-alpha.1"
+  },
+  "bin": {
+    "dsh-workbench-import": "lib/import-cli.js"
+  }
+}
