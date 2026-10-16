@@ -564,25 +564,17 @@ function normalizeBuildSourcePath(path: string): string {
   const normalized = path.replaceAll('\\', '/')
   const lower = normalized.toLowerCase()
 
-  const projectMarker = '/projecth/'
-  const projectIndex = lower.lastIndexOf(projectMarker)
-  if (projectIndex >= 0) {
-    const relative = normalized.slice(projectIndex + projectMarker.length)
-    if (/^(?:Source|Plugins|Config)\//i.test(relative)) {
-      return relative
-    }
-  }
-
-  const engineMarker = '/enginesource/'
+  const engineMarker = '/engine/'
   const engineIndex = lower.lastIndexOf(engineMarker)
   if (engineIndex >= 0) {
-    const relative = normalized.slice(engineIndex + engineMarker.length)
+    const relative = normalized.slice(engineIndex + 1)
     if (/^Engine\/(?:Source|Plugins)\//i.test(relative)) {
       return relative
     }
   }
 
-  return path
+  const project = /\/(Source|Plugins|Config)\//i.exec(normalized)
+  return project ? normalized.slice(project.index + 1) : path
 }
 
 /**

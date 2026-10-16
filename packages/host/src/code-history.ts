@@ -36,6 +36,8 @@ export function codeCutoff(now: Date, months: number): Date {
 
 /** Shared business owner; reads do not collect or call a model. */
 export class CodeHistory {
+  /** Whether repository collection or code analysis is still running. */
+  get isRunning(): boolean { return this.running !== null }
   private readonly lifetime = new AbortController()
   private timer: ReturnType<typeof setTimeout> | undefined
   private running: Promise<void> | null = null

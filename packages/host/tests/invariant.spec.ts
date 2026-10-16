@@ -12,7 +12,7 @@ import * as Companion from '../src/invariant.ts'
 import { profileIdSchema } from '../src/models.ts'
 import { buildPersonalProfileContent } from '../src/profile/rules.ts'
 import { WorkbenchRuntime } from '../src/runtime.ts'
-import { aiDraft, evidenceSnapshot, harness } from './helpers.ts'
+import { aiDraft, evidenceSnapshot, harness, runRecord } from './helpers.ts'
 
 async function setup() {
   const h = await harness()
@@ -29,6 +29,18 @@ async function setup() {
   await h.ctx.plugin(Companion)
   return { ...h, runtime, async close() { await reviews.close(); await code.close(); await history.close(); await journal.close(); await h.close() } }
 }
+
+it('defers maintenance while an investigation is unfinished and releases it after completion', async () => {
+  const h = await setup()
+  try {
+    expect(h.ctx.personalWorkbench.maintenanceBusy()).toBe(false)
+    const run = runRecord()
+    await h.store.domain.table('runs').put(run.id, run)
+    expect(h.ctx.personalWorkbench.maintenanceBusy()).toBe(true)
+    await h.store.domain.table('runs').put(run.id, { ...run, status: 'completed', finishedAt: new Date().toISOString() })
+    expect(h.ctx.personalWorkbench.maintenanceBusy()).toBe(false)
+  } finally { await h.runtime.close(); await h.close() }
+})
 
 it('accepts a reviewed publication and diagnoses a later overwrite of that immutable version', async () => {
   const h = await setup()

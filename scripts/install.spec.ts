@@ -17,6 +17,7 @@ it('installs into a new home and reuses the same profile on repeated installatio
     }
     const profile = JSON.parse(await readFile(join(home, 'profiles/personal/package.json'), 'utf8'))
     expect(profile.dsh.profile.bundles).toContain('@xrunmasterx/dsh-personal')
+    expect(profile.packageManager).toBe('pnpm@10.32.1')
     expect(await readFile(join(home, 'profiles/personal/cordis.patch.yml'), 'utf8')).toContain('[]')
   } finally { await rm(home, { recursive: true, force: true }) }
 })

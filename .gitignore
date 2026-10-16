@@ -10,3 +10,12 @@ lib/
 backups/
 dist/
 .playwright-mcp/
+.credentials.yaml
+settings.yaml
+.mcp.json
+personal-migration.json
+personal-installation.json
+storages/
+sessions/
+attachments/
+personal-workbench/

@@ -37,10 +37,6 @@
       ]
     }
   },
-  "scripts": {
-    "bundle": "tsdown",
-    "watch": "tsdown --watch"
-  },
   "dependencies": {},
   "peerDependencies": {
     "@deepseek-ai/cordis": "4.0.2"

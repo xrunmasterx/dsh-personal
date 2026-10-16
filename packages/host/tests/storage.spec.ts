@@ -188,6 +188,10 @@ describe('owned storage retention', () => {
       expect(first.content).toBe('中文')
       const second = await artifacts.preview(run.id, file, first.nextOffset!, 100, new AbortController().signal)
       expect(first.content + second.content).toBe(bytes.toString())
+      const migrated = { ...file, absolutePath: `Z:\\Old Home\\personal-workbench\\artifacts\\${run.id}\\evidence.txt` }
+      expect((await artifacts.preview(run.id, migrated, 0, 100, new AbortController().signal)).content).toBe(bytes.toString())
+      await expect(artifacts.preview(run.id, { ...migrated, absolutePath: migrated.absolutePath.replace('evidence.txt', '..\\outside.txt') }, 0, 100, new AbortController().signal)).rejects.toThrow('outside')
+      await expect(artifacts.preview(run.id, { ...migrated, absolutePath: '/unrelated/evidence.txt' }, 0, 100, new AbortController().signal)).rejects.toThrow('outside')
       await expect(artifacts.preview(run.id, file, 0, 8, AbortSignal.abort())).rejects.toMatchObject({
         name: 'AbortError',
       })

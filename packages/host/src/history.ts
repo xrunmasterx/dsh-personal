@@ -42,6 +42,8 @@ export function historyWindow(lookback: HistorySettings['lookback'], now = new D
 
 /** One durable archive shared by browser lists and the periodic importer. */
 export class ConversationHistory {
+  /** Whether source collection or archive analysis is still running. */
+  get isRunning(): boolean { return this.running !== null }
   private readonly readers = new HistoryReaders()
   private readonly lifetime = new AbortController()
   private queue: Promise<unknown> = Promise.resolve()

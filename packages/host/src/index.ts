@@ -66,6 +66,14 @@ export const inject = ['jobs', 'storageDomain', 'subprocess', 'credentials', 'll
 
 /** Explicit Host capability selected by the Personal browser assembly. */
 export class PersonalWorkbench extends TypertRemoteService {
+  /** Read active business operations without exposing task content or starting work.
+   * @returns Whether an updater should defer replacing this process.
+   */
+  maintenanceBusy(): boolean {
+    const changes = queryChanges(this.runtime.store)
+    return this.polishing > 0 || this.history.isRunning || this.code.isRunning || this.reviews.isRunning
+      || changes.activeRuns.length > 0 || changes.activeProfiles.length > 0
+  }
   constructor(
     ctx: Context,
     readonly runtime: WorkbenchRuntime,

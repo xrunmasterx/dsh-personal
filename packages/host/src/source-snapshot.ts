@@ -3,7 +3,7 @@ import type { Context } from '@deepseek-ai/cordis'
 import { createHash } from 'node:crypto'
 import { readFile, stat } from 'node:fs/promises'
 import { resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { createRequire } from 'node:module'
 import { z } from 'zod'
 import type { Config } from './config.ts'
 import { redactDiagnostic } from './diagnostics.ts'
@@ -11,7 +11,7 @@ import { readGitCommand } from './git/process.ts'
 import type { SourceSnapshot } from './models.ts'
 
 /**
- * Observe the harness checkout and each configured Git source without fetching or modifying them.
+ * Read the installed Session version and explicitly configured Git sources without modifying them.
  * @param ctx - Host subprocess owner.
  * @param config - explicit source repositories and read limits.
  * @param signal - investigation lifetime.
@@ -20,11 +20,8 @@ import type { SourceSnapshot } from './models.ts'
 export async function captureSources(ctx: Context, config: Config, signal: AbortSignal): Promise<SourceSnapshot> {
   const manifest = z
     .object({ version: z.string() })
-    .parse(JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8')) as unknown)
-  const sources = [
-    { id: 'DSH', path: fileURLToPath(new URL('../../../../', import.meta.url)), targetMainRef: 'HEAD' },
-    ...config.gitSources,
-  ]
+    .parse(JSON.parse(await readFile(createRequire(import.meta.url).resolve('@deepseek-ai/dsh-session/package.json'), 'utf8')) as unknown)
+  const sources = config.gitSources
   const repositories = await Promise.all(
     sources.map(async (source): Promise<SourceSnapshot['repositories'][number]> => {
       const base = {

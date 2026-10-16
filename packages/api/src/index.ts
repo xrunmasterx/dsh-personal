@@ -12,6 +12,11 @@ export const inject = ['personalWorkbench', 'connection']
  * @param ctx - Host with the authenticated connection.
  */
 export function apply(ctx: Context): void {
+  ctx.effect(() => ctx.connection.fetch.register({
+    path: '/api/personal-workbench.status', methods: ['GET'], requestBody: 'buffered',
+    fetch: async () => Response.json({ ready: true, idle: !ctx.personalWorkbench.maintenanceBusy() },
+      { headers: { 'Cache-Control': 'no-store' } }),
+  }), 'Personal startup and update status')
   ctx.effect(
     () =>
       ctx.connection.fetch.register({

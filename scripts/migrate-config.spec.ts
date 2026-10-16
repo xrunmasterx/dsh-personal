@@ -32,3 +32,27 @@ it('preserves legacy host choices, relocates writable data and leaves existing o
     expect(await readFile(target, 'utf8')).toBe(migrated)
   } finally { await rm(home, { recursive: true, force: true }) }
 })
+
+it.each([
+  { dataRoot: '/old-home/custom/files', expected: 'custom/files' },
+  { dataRoot: "!!js dshHomePath('custom/files')", expected: "dshHomePath('custom/files')" },
+  { dataRoot: '/outside-home/files', expected: null },
+  { dataRoot: '!!js process.env.CUSTOM_FILES', expected: null },
+])('relocates a copied data root or rejects an unverified external directory: $dataRoot', async ({ dataRoot, expected }) => {
+  const home = await mkdtemp(join(tmpdir(), 'personal-config-'))
+  try {
+    await mkdir(join(home, 'profiles/web'), { recursive: true })
+    await mkdir(join(home, 'profiles/personal'))
+    await writeFile(join(home, 'personal-migration.json'), JSON.stringify({ source: '/old-home' }))
+    await writeFile(join(home, 'profiles/web/cordis.patch.yml'), `- id: personal-workbench-host\n  config:\n    dataRoot: ${dataRoot}\n`)
+    const target = join(home, 'profiles/personal/cordis.patch.yml')
+    await writeFile(target, '[]\n')
+    if (expected === null) {
+      await expect(migrateProfileConfig(home)).rejects.toThrow(/dataRoot/)
+      expect(await readFile(target, 'utf8')).toBe('[]\n')
+    } else {
+      await migrateProfileConfig(home)
+      expect((await readFile(target, 'utf8')).replaceAll('\\', '/')).toContain(expected)
+    }
+  } finally { await rm(home, { recursive: true, force: true }) }
+})

@@ -6,8 +6,13 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: colleague checkout
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: colleague checkout
       - uses: pnpm/action-setup@v4
         with:
           version: 10.32.1
@@ -15,7 +20,9 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
+          cache-dependency-path: colleague checkout/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       - run: pnpm test
+      - run: node scripts/smoke.mjs
       - run: node scripts/check-public.mjs

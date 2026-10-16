@@ -25,6 +25,8 @@ The installer creates a dedicated `personal` profile under `~/.dsh-personal`. It
 
 Startup uses the pinned DSH installed by this repository, in an independent profile and data home. This keeps the welcome patch and tested dependency versions consistent; an arbitrary external CLI is not a supported launch path.
 
+On Windows with PowerShell 7, double-click `Open-Personal.cmd`. It builds Git-visible source in an isolated `.local/launcher/<port>/release-*` directory, leaving the running version's dependencies and UI untouched. Running chats, archive/code analysis, reviews and investigations defer the switch. Failed installation or startup restores the previous profile and runtime. Successful updates keep the active and previous build and remove obsolete build caches; do not move or delete these runtime directories separately. The default source workspace stays in the stable checkout, or can be set with `PERSONAL_SOURCE_ROOT`.
+
 ## Existing Personal data
 
 Stop the old instance before a final migration. Keep an independent backup of its entire DSH home, including attachments, sessions, settings, credentials, storages, and `personal-workbench` artifacts. Backups contain private data and must not be committed here.
@@ -37,7 +39,7 @@ node scripts/start.mjs --home /absolute/new-personal-home
 
 Migration requires a new target and never changes the original home. It copies business data and verifies file hashes. Legacy Personal log-only metadata is explicitly classified as optional; its content, sequence, and timestamps remain intact. Unknown Personal event kinds or events that modify the native message surface abort migration. Native conversation messages are not rewritten or removed. New conversation bindings and task-editor audit are stored in `personal_plugin_records`; the official DSH request log continues to own model history.
 
-Installation imports the legacy web profile’s Personal host configuration into an empty Personal profile automatically. Keep its data root inside the new home, preserve account namespaces, and configure your own project, model, repositories, branches, and optional `profileIdentity`. Do not reuse a path into the old home for writable data. The original home is your rollback point; changes made after migration are not automatically copied back.
+Installation imports the legacy web profile’s Personal host configuration into an empty Personal profile automatically, preserving its data root's relative position inside the copied home. External data directories and unrecognized path expressions abort automatic import: copy those files separately and supply an explicit configuration. Existing Personal overrides are preserved. Historical investigation evidence is read from the current run directory and verified by size and hash, without requiring the old absolute path. Preserve account namespaces and configure your own project, model, repositories, branches, and optional `profileIdentity`. The original home is your rollback point; changes made after migration are not automatically copied back.
 
 ## Configuration
 
@@ -57,6 +59,8 @@ All four packages are released together. Their package names are independent of 
 
 Back up the data home, stop Personal, update this repository, run `pnpm install --frozen-lockfile`, rebuild, reinstall into the same home, then restart. DSH upgrades are separate changes and must pass the compatibility tests before the pinned version is changed. Do not run an older release against data migrated by a newer incompatible release.
 
+The Windows launcher can instead apply local code changes before opening; it does not pull remote Git commits. Its profile checkpoints restore installation links, not business data, and are not a substitute for backing up the home. A port already serving one home cannot be reused for a different home; test instances need a separate home and port.
+
 This repository backs up **code**. Your work records, screenshots, imported conversations, code diffs, reports, credentials, and local configuration remain private in the selected data home and require a separate backup.
 
 ## License
@@ -69,4 +73,4 @@ MIT. The retained DeepSeek license notice covers the original Personal implement
 
 ## Verification
 
-Run `pnpm build`, `pnpm test`, and `node scripts/check-public.mjs`. Tests exercise the business owners, UI interactions, migration frame validation, configuration migration, and the welcome patch. Optional enterprise services require your own credentials, repositories, and local tools; a successful offline test run does not assert their availability.
+Run `pnpm build`, `pnpm test`, `node scripts/smoke.mjs`, and `node scripts/check-public.mjs`. Tests exercise business owners, UI interactions, migration frames, configuration migration, update rollback, and the welcome patch. The smoke installs and boots official DSH in an isolated home without developer credentials, checking the Web page and Personal business API; Windows and Linux CI both run it. Optional enterprise services require your own credentials, repositories, and local tools; a successful offline test run does not assert their availability.

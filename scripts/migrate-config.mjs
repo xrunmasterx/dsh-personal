@@ -1,6 +1,6 @@
 /** Preserve the legacy host configuration while relocating its owned writable files. */
 import { readFile, writeFile, readdir } from 'node:fs/promises'
-import { join, isAbsolute } from 'node:path'
+import { join, isAbsolute, resolve, relative } from 'node:path'
 import { parseDocument, YAMLSeq, isScalar, visit } from 'yaml'
 
 /** Import the legacy host row only into an otherwise unconfigured Personal profile. */
@@ -22,8 +22,20 @@ export async function migrateProfileConfig(home) {
   row.delete('name')
   const config = row.get('config', true)
   if (!config) throw new Error('Legacy Personal host configuration is missing')
-  // Screenshots and investigation artifacts are copied under this home by migrate.mjs.
-  config.set('dataRoot', join(home, 'personal-workbench'))
+  const dataRoot = config.get('dataRoot', true)
+  if (!isScalar(dataRoot) || typeof dataRoot.value !== 'string') throw new Error('Legacy Personal dataRoot is missing')
+  if (dataRoot.tag === 'tag:yaml.org,2002:js') {
+    if (!/^dshHomePath\(['"][^'"]+['"]\)$/.test(dataRoot.value))
+      throw new Error('Custom dataRoot expression requires an explicit migrated Personal configuration; it cannot be relocated automatically')
+    const child = dataRoot.value.slice(dataRoot.value.indexOf('(') + 2, -2)
+    if (relative(manifest.source, resolve(manifest.source, child)).startsWith('..') || isAbsolute(child))
+      throw new Error('Legacy dataRoot is outside the copied home; copy those files before configuring Personal')
+  } else {
+    const child = relative(manifest.source, dataRoot.value)
+    if (!isAbsolute(dataRoot.value) || child.startsWith('..') || isAbsolute(child))
+      throw new Error('Legacy dataRoot is outside the copied home; copy those files before configuring Personal')
+    dataRoot.value = join(home, child)
+  }
   if (!config.has('profileIdentity')) {
     const directory = join(home, 'storages/personal_workbench/evidence')
     let entries = []

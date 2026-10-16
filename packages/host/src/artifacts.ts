@@ -2,7 +2,7 @@
 import { createHash } from 'node:crypto'
 import { createReadStream } from 'node:fs'
 import { mkdir, readFile, realpath, stat, writeFile } from 'node:fs/promises'
-import { isAbsolute, join, relative, resolve } from 'node:path'
+import { basename, isAbsolute, join, relative, resolve } from 'node:path'
 import type { Artifact, RunId, EvidencePreview } from './models.ts'
 
 /**
@@ -65,7 +65,14 @@ export class ArtifactStore {
     if (!Number.isSafeInteger(offset) || offset < 0 || offset > file.sizeBytes)
       throw new Error('Invalid evidence offset')
     const root = await this.checkedDirectory(id)
-    const path = await realpath(file.absolutePath)
+    // Captured absolute paths retain their original machine prefix after a home migration.
+    const recorded = file.absolutePath.replaceAll('\\', '/')
+    const owner = `/${basename(this.root)}/${id}/`
+    const start = recorded.lastIndexOf(owner)
+    if (start < 0) throw new Error('Evidence path is outside its investigation directory')
+    const candidate = resolve(root, recorded.slice(start + owner.length))
+    if (!inside(root, candidate)) throw new Error('Evidence path is outside its investigation directory')
+    const path = await realpath(candidate)
     if (!inside(root, path)) throw new Error('Evidence path is outside its investigation directory')
     const info = await stat(path)
     if (!info.isFile() || info.size !== file.sizeBytes) throw new Error('Evidence size changed')

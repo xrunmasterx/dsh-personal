@@ -19,6 +19,8 @@ const domain = defineDomain({ name: 'personal_retrospectives', version: 1, layou
 
 /** Scheduled analysis never writes tasks and never replaces human corrections. */
 export class Reviews {
+  /** Whether retrospective generation is still running. */
+  get isRunning(): boolean { return this.running !== null }
   private readonly policy
   private readonly lifetime = new AbortController()
   private running: Promise<void> | null = null
