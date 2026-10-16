@@ -32,16 +32,18 @@ export async function openTaskSession(
   if (!existing && link.state === 'ready')
     throw new Error('The linked DSH session is unavailable; it may have been deleted')
   const owner = workspaces.list.getSnapshot().items.find(workspace => workspace.sessionIds.includes(id))
-  if (!existing || (existing.blank && !owner)) {
-    const workspace = await workspaces.create({ path: existing?.cwd ?? sourceRoot })
+  if (!existing) {
+    const workspace = await workspaces.create({ path: sourceRoot })
     await sessions.create({ sessionId: id, workspaceId: workspace.workspaceId })
-  } else {
-    // Native creation idempotently resumes cold history without replacing its identity.
-    await sessions.create({ sessionId: id, ...(owner ? { workspaceId: owner.workspaceId } : existing.cwd ? { cwd: existing.cwd } : {}) })
   }
   signal?.throwIfAborted()
   await prepare()
   signal?.throwIfAborted()
+  if (existing?.blank && !owner) {
+    const workspace = await workspaces.create({ path: existing.cwd ?? sourceRoot })
+    await sessions.create({ sessionId: id, workspaceId: workspace.workspaceId })
+    signal?.throwIfAborted()
+  }
   if (existing && !existing.blank) { sessions.open(id); return }
   const scope = sessions.scope(id)
   if (!scope) throw new Error('The task session is not addressable')

@@ -7,7 +7,7 @@ import { History, HistoryReadingHost, type HistoryActions } from '../src/client/
 import { HistorySettings } from '../src/client/HistorySettings.tsx'
 import { zh } from '../src/client/locales.ts'
 
-afterEach(cleanup)
+afterEach(() => { cleanup(); vi.restoreAllMocks() })
 const t = ((key: keyof typeof zh, args?: Record<string, unknown>) => Object.entries(args ?? {}).reduce((s, [k, v]) => s.replace(`{${k}}`, String(v)), zh[key])) as Parameters<typeof History>[0]['t']
 const taskId = '00000000-0000-4000-8000-000000000001'
 const id = 'a'.repeat(64) as HistoryId
@@ -233,6 +233,7 @@ it('updates initial progress while reading without reloading the transcript', as
 })
 
 it('removes only a leading request wrapper from questions without changing stored text', async () => {
+  vi.spyOn(Date.prototype, 'toLocaleString').mockReturnValue('Fixture time')
   const api = actions()
   const original = '## My request:\r\n\r\n重启可视化面板\n\n保留 **全部问答**'
   const messages = [

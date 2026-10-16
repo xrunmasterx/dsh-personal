@@ -11,7 +11,7 @@ exports[`emphasizes questions and answers while collapsing progress and revealin
 exports[`opens task histories in the work-area host and restores the retained card on Escape 1`] = `"IBL discussion"`;
 
 exports[`removes only a leading request wrapper from questions without changing stored text 1`] = `
-"你你的提问2026/9/9 15:00:00重启可视化面板
+"你你的提问Fixture time重启可视化面板
 保留 全部问答"
 `;
 

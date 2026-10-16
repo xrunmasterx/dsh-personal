@@ -527,6 +527,7 @@ describe('backlog and execution Gantt', () => {
   })
 
   it('filters native task conversations without opening or changing them', async () => {
+    vi.spyOn(Date.prototype, 'toLocaleString').mockReturnValue('Fixture time')
     const callbacks = api({ ...row, item: { ...row.item, sessions: [{
       id: '00000000-0000-4000-8000-000000000007' as TaskSessionId,
       title: 'Existing conversation', provider: 'dsh', state: 'ready', createdAt: '2026-09-08T00:00:00Z',
@@ -539,7 +540,7 @@ describe('backlog and execution Gantt', () => {
     expect(screen.getByRole('button', { name: /^Existing conversation/ })).toBeTruthy()
     expect(callbacks.openTaskSession).not.toHaveBeenCalled()
     expect(callbacks.journalWrite).not.toHaveBeenCalled()
-    await expect(Array.from(screen.getByRole('region', { name: zh['task.sessions'] }).querySelectorAll('button')).map(button => button.getAttribute('aria-label') ?? button.textContent?.replace(/2026[^ ]+ [0-9:]+/g, '<date>'))).toMatchFileSnapshot('./expected/task-session-controls.txt')
+    await expect(Array.from(screen.getByRole('region', { name: zh['task.sessions'] }).querySelectorAll('button')).map(button => button.getAttribute('aria-label') ?? button.textContent)).toMatchFileSnapshot('./expected/task-session-controls.txt')
   })
 
   it('hides native archives and starts new chats without writing empty associations', async () => {

@@ -77,7 +77,7 @@ describe('task conversations use native DSH ownership', () => {
     expect(h.face.rename).toHaveBeenCalledWith(link.title)
     expect(h.input.setDraft).not.toHaveBeenCalled()
   })
-  it('resumes cold ready history with the same identity without renaming or replacing its composer', async () => {
+  it('resumes cold ready history through preparation without recreating the native session', async () => {
     const h = native({ blank: false }, 'Unsent work')
     await openTaskSession(
       h.service,
@@ -87,7 +87,7 @@ describe('task conversations use native DSH ownership', () => {
       '/project',
     )
     expect(h.sessions.open).toHaveBeenCalledWith(link.id)
-    expect(h.sessions.create).toHaveBeenCalledWith({ sessionId: link.id, workspaceId: 'ws' })
+    expect(h.sessions.create).not.toHaveBeenCalled()
     expect(h.face.rename).not.toHaveBeenCalled()
     expect(h.input.setDraft).not.toHaveBeenCalled()
   })
@@ -102,7 +102,7 @@ describe('task conversations use native DSH ownership', () => {
   it('adopts an interrupted reservation and preserves an existing draft', async () => {
     const h = native({ blank: true }, 'My additions')
     await openTaskSession(h.service, h.workspaceService, link, async () => {}, '/project')
-    expect(h.sessions.create).toHaveBeenCalledWith({ sessionId: link.id, workspaceId: 'ws' })
+    expect(h.sessions.create).not.toHaveBeenCalled()
     expect(h.sessions.open).toHaveBeenCalledWith(link.id)
     expect(h.input.setDraft).not.toHaveBeenCalled()
   })
@@ -135,6 +135,7 @@ describe('board conversation restoration', () => {
     const prepare = vi.fn(async () => {})
     await openBoardSession(h.service, h.workspaceService, '/personal', 'Board', prepare)
     expect(prepare).toHaveBeenCalledWith(link.id)
+    expect(h.sessions.create).not.toHaveBeenCalled()
     expect(h.sessions.open).toHaveBeenCalledWith(link.id)
     expect(h.face.rename).not.toHaveBeenCalled()
     expect(h.input.setDraft).not.toHaveBeenCalled()

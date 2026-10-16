@@ -1,3 +1,4 @@
+import type {} from '@deepseek-ai/dsh-api-session-controller'
 import { PersonalRecords } from './personal-records.ts'
 export { PersonalRecords } from './personal-records.ts'
 import { Reviews } from './reviews.ts'
@@ -61,7 +62,7 @@ declare module '@deepseek-ai/cordis' {
 }
 
 /** Runtime capabilities required by this business Host. */
-export const inject = ['jobs', 'storageDomain', 'subprocess', 'credentials', 'llm', 'sessions', 'systemPrompt', 'attachments']
+export const inject = ['jobs', 'storageDomain', 'subprocess', 'credentials', 'llm', 'sessions', 'systemPrompt', 'attachments', 'sessionController']
 
 /** Explicit Host capability selected by the Personal browser assembly. */
 export class PersonalWorkbench extends TypertRemoteService {
@@ -197,7 +198,8 @@ export class PersonalWorkbench extends TypertRemoteService {
    * @returns completion after durable context preparation.
    */
   @Remote
-  prepareTaskSession(sessionId: SessionId, taskId: JournalId): Promise<void> {
+  async prepareTaskSession(sessionId: SessionId, taskId: JournalId): Promise<void> {
+    await this.resumeConversation(sessionId)
     return this.taskContext.prepare(sessionId, taskId)
   }
 
@@ -207,8 +209,14 @@ export class PersonalWorkbench extends TypertRemoteService {
    * @returns Completion after durable preparation.
    */
   @Remote
-  prepareBoardSession(sessionId: SessionId, week: string): Promise<void> {
+  async prepareBoardSession(sessionId: SessionId, week: string): Promise<void> {
+    await this.resumeConversation(sessionId)
     return this.taskContext.prepareBoard(sessionId, week)
+  }
+
+  private async resumeConversation(sessionId: SessionId): Promise<void> {
+    const result = await this.ctx.sessionController.resolveAgent(sessionId)
+    if ('error' in result) throw new Error(result.error.message)
   }
 
   /** Save a native conversation's task update and association together.

@@ -1,3 +1,4 @@
+import { PersonalMark } from './PersonalMark.tsx'
 import { CodeSettings } from './CodeSettings.tsx'
 import type { CodeSettings as CodePreferences } from '@xrunmasterx/dsh-personal-host/client'
 import { randomUUID } from '@deepseek-ai/dsh-util-crypto'
@@ -357,6 +358,9 @@ export function apply(ctx: Context): () => void {
     retain()
     return off
   }, 'Personal available main panels')
+  ctx.slots.inject('conversation.hero.brand.mark', () => ctx.slots.register({
+    name: 'conversation.hero.brand.mark', priority: -1,
+  }, PersonalMark))
   ctx.slots.inject('conversation.session.header.actions', () => ctx.slots.register({
     name: 'conversation.session.header.actions', id: 'personal-new-chat', locale: NS, order: 30,
     inject: () => ({ start: async () => { if (startNewChat) await startNewChat() } }),

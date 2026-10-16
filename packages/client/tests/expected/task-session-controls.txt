@@ -4,7 +4,7 @@
   "DSH",
   "Codex",
   "Cursor",
-  "Existing conversationDSH · <date>",
+  "Existing conversationDSH · Fixture time",
   "继续对话",
   "归档会话：Existing conversation",
 ]
